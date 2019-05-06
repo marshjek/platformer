@@ -88,6 +88,8 @@ class Main extends Phaser.Scene {
         plats = this.physics.add.staticGroup()
         plats.create(300, 525, 'platform').setScale(5, 5).refreshBody()
         plats.create(200, 650, 'platform').setScale(5, 5).refreshBody()
+        plats.create(512, 495, 'platform').setScale(5, 5).refreshBody()
+
 
 
         const collideCoin = (p, c) => {
