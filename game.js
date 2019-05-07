@@ -94,7 +94,11 @@ class Main extends Phaser.Scene {
         plats.create(500, 268, 'platform').setScale(5, 5).refreshBody()
         plats.create(860, 639, 'platform').setScale(5, 5).refreshBody()
         plats.create(739, 412, 'platform').setScale(5, 5).refreshBody()
-        plats.create(739, 412, 'platform').setScale(5, 5).refreshBody()
+        plats.create(941, 301, 'platform').setScale(5, 5).refreshBody()
+        plats.create(308, 170, 'platform').setScale(5, 5).refreshBody()
+        plats.create(542, 696, 'platform').setScale(5, 5).refreshBody()
+        plats.create(931, 121, 'platform').setScale(5, 5).refreshBody()
+        plats.create(660, 121, 'platform').setScale(5, 5).refreshBody()
         
 
 
