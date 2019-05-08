@@ -1,4 +1,3 @@
-
 const KEYS = 'LEFT,RIGHT,UP,DOWN,W,A,S,D,SPACE,R'
 let pl, plats, keys, jump, over, timer, score, hscore
 let bumped = false
@@ -100,11 +99,12 @@ class Main extends Phaser.Scene {
         const spawnPower = (x,y) => {
             let p = powerups.create(x||rx(), y||ry(), 'powerup')
             p.setScale(2, 2)
-            setTimeout(spawnPower, rr(10000,15000) )
+            setTimeout(spawnPower, rr(30000,35000) )
         }
         setTimeout(spawnPower, 3000)
         const collidePowerUp = (p, u) => {
             u.destroy()
+            score += 5
         }
         const collidePlat = () => {
             if (!bumped) bump.play()
