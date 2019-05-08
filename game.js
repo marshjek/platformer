@@ -126,6 +126,7 @@ class Main extends Phaser.Scene {
         setTimeout(spawnPower, 3000)
         const collidePowerUp = (p, u) => {
             u.destroy()
+            b.destroy()
         }
 
 
@@ -143,12 +144,13 @@ class Main extends Phaser.Scene {
             over.play()
 
         }
+        
 
         this.physics.add.collider(pl, plats, collidePlat)
         this.physics.add.collider(baddy, plats)
         this.physics.add.collider(pl, coins, collideCoin)
         this.physics.add.collider(pl, baddy, endgame)
-        this.physics.add.collider(pl, powerups, collidePowerUp)
+        this.physics.add.collider(pl, powerups, collidePowerup)
 
 
         let scoreText = this.add.text(16, 16, 'Score: 0', {
