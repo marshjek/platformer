@@ -42,6 +42,7 @@ class Main extends Phaser.Scene {
         //if (pl.x < 400) {
         //  badx = Phaser.Math.Between(0,this.getBounds().width/2)
         //} else
+        
         let baddy = this.physics.add.group()
         const spawnEnemy = () => {
             let b = baddy.create(rx(), ry(), 'baddy')
@@ -104,7 +105,7 @@ class Main extends Phaser.Scene {
         setTimeout(spawnPower, 3000)
         const collidePowerUp = (p, u) => {
             u.destroy()
-            score += 5
+            b.destroy()
         }
         const collidePlat = () => {
             if (!bumped) bump.play()
