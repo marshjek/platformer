@@ -105,7 +105,7 @@ class Main extends Phaser.Scene {
         setTimeout(spawnPower, 3000)
         const collidePowerUp = (p, u) => {
             u.destroy()
-            b.destroy()
+            baddy.sprite.kill()
         }
         const collidePlat = () => {
             if (!bumped) bump.play()
