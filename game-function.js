@@ -31,11 +31,7 @@ function create() {
   let collect = this.sound.add('collect')
   over = this.sound.add('gamesound')
   let bump = this.sound.add('collide')
-  //let width = this.getBounds().width
-  //let badx
-  //if (pl.x < 400) {
-  //  badx = Phaser.Math.Between(0,this.getBounds().width/2)
-  //} else
+ 
 
   baddy = this.physics.add.sprite(200, 350, 'baddy').setScale(2.5,2.5)
   baddy.setCollideWorldBounds(true)

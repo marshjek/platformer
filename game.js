@@ -67,7 +67,7 @@ class Main extends Phaser.Scene {
         }
         spawnEnemy()
 
-        timer = setInterval(spawnEnemy, 2000)
+        timer = setInterval(spawnEnemy, \)
 
         let coins = this.physics.add.group()
         const spawnCoin = (x,y) => {
