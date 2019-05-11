@@ -105,7 +105,7 @@ class Main extends Phaser.Scene {
         const spawnPower = (x,y) => {
             let p = powerups.create(x||rx(), y||ry(), 'powerup')
             p.setScale(2, 2)
-            setTimeout(spawnPower, rr(30000,35000) )
+            setTimeout(spawnPower, rr(15000,25000) )
         }
         setTimeout(spawnPower, 3000)
         const collidePowerUp = (p, u) => {
