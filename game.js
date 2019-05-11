@@ -19,7 +19,8 @@ class Main extends Phaser.Scene {
         this.load.image('coin', './assets/img/coin.png')
         this.load.image('baddy', './assets/img/baddy.png')
         this.load.image('end', './assets/img/end.png')
-        this.load.image('powerup', './assets/img/powerup.png')
+        this.load.image('powerup', './assets/img/speed.png')
+
         this.load.audio('music', './assets/snd/backgoundmusic.mp3')
         this.load.audio('collect', './assets/snd/coinc.wav')
         this.load.audio('collide', './assets/snd/collide.wav')
@@ -31,6 +32,8 @@ class Main extends Phaser.Scene {
         pl = this.physics.add.sprite(100, 150, 'player')
         pl.setCollideWorldBounds(true)
         pl.setGravityY(1200)
+        //pl.defSpeed = 250
+        pl.curSpeed = 250
         jump = this.sound.add('jump')
         let music = this.sound.add('music')
         music.play()
@@ -55,7 +58,6 @@ class Main extends Phaser.Scene {
         }
         spawnEnemy()
 
-        timer = setInterval(spawnEnemy)
 
 
         timer = setInterval(spawnEnemy, 2000)
@@ -105,11 +107,23 @@ class Main extends Phaser.Scene {
         const spawnPower = (x,y) => {
             let p = powerups.create(x||rx(), y||ry(), 'powerup')
             p.setScale(2, 2)
-            setTimeout(spawnPower, rr(15000,25000) )
+            setTimeout(spawnPower, rr(10000,10000) )
         }
-        setTimeout(spawnPower, 3000)
-        const collidePowerUp = (p, u) => {
+
+        setTimeout(spawnPower, 5000)
+
+
+        const speedBoost = (p, u) => {
             u.destroy()
+            p.curSpeed += 250
+            setTimeout( () => {p.curSpeed -= 250}, 5000)
+            
+
+
+            // teleport
+            //let origv = p.body.speed
+            //p.setVelocity(origv + 100)
+            //setTimeout( () => p.setVelocity(origv), 5000)
         }
         const collidePlat = () => {
             if (!bumped) bump.play()
@@ -127,7 +141,7 @@ class Main extends Phaser.Scene {
         this.physics.add.collider(baddy, plats)
         this.physics.add.collider(pl, coins, collideCoin)
         this.physics.add.collider(pl, baddy, endgame)
-        this.physics.add.collider(pl, powerups, collidePowerUp)
+        this.physics.add.collider(pl, powerups, speedBoost)
         let scoreText = this.add.text(16, 16, 'Score: 0', {
             fontFamily: "comic sans ms",
             color: "red",
@@ -149,10 +163,11 @@ class Main extends Phaser.Scene {
             this.scene.restart()
         }
         if (keys.LEFT.isDown || keys.A.isDown) {
-            pl.setVelocityX(-250)
+            pl.setVelocityX(-pl.curSpeed)
         }
         else if (keys.RIGHT.isDown || keys.D.isDown) {
-            pl.setVelocityX(250)
+            pl.setVelocityX(pl.curSpeed)
+
         }
         if (pl.body.onFloor()) {
             if (keys.UP.isDown || keys.W.isDown) {
