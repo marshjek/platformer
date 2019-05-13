@@ -110,7 +110,7 @@ class Main extends Phaser.Scene {
             setTimeout(spawnPower, rr(10000,10000) )
         }
 
-        setTimeout(spawnPower, 5000)
+        setTimeout(spawnPower, 9000)
 
 
         const speedBoost = (p, u) => {
