@@ -108,7 +108,7 @@ class Main extends Phaser.Scene {
         const spawnPower = (x,y) => {
             let p = powerups.create(x||rx(), y||ry(), 'powerup')
             p.setScale(2, 2)
-            setTimeout(spawnPower, rr(10000,10000) )
+            //setTimeout(spawnPower, rr(10000,10000) )
         }
 
         setTimeout(spawnPower, 9000)
@@ -116,7 +116,7 @@ class Main extends Phaser.Scene {
         let tele = this.physics.add.group()
         const spawnTele = (x,y) => {
             let t = tele.create(x||rx(), y||ry(), 'tele')
-            setTimeout(spawnTele, rr(15000.15000) )
+            t.setScale(2, 2)
         }
         
         setTimeout(spawnTele, 14000)
@@ -124,7 +124,7 @@ class Main extends Phaser.Scene {
         const teleBoost= (p, t) => {
             t.destroy()
             let origv = p.body.speed
-            p.setVelocity(origv + 100)
+            p.setVelocity(origv + 9999999999999999999)
             setTimeout( () => p.setVelocity(origv), 5000)
         }
 
@@ -197,5 +197,7 @@ class Main extends Phaser.Scene {
 }
 let game = new Phaser.Game({
     scene: [Main],
-    physics: { default: 'arcade' }
+    physics: { default: 'arcade' },
+    scale: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH
 })
