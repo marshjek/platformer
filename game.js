@@ -20,6 +20,7 @@ class Main extends Phaser.Scene {
         this.load.image('baddy', './assets/img/baddy.png')
         this.load.image('end', './assets/img/end.png')
         this.load.image('powerup', './assets/img/speed.png')
+        this.load.image('tele', '/assets/img/tele.png')
 
         this.load.audio('music', './assets/snd/backgoundmusic.mp3')
         this.load.audio('collect', './assets/snd/coinc.wav')
@@ -111,6 +112,21 @@ class Main extends Phaser.Scene {
         }
 
         setTimeout(spawnPower, 9000)
+        
+        let tele = this.physics.add.group()
+        const spawnTele = (x,y) => {
+            let t = tele.create(x||rx(), y||ry(), 'tele')
+            setTimeout(spawnTele, rr(15000.15000) )
+        }
+        
+        setTimeout(spawnTele, 14000)
+        
+        const teleBoost= (p, t) => {
+            t.destroy()
+            let origv = p.body.speed
+            p.setVelocity(origv + 100)
+            setTimeout( () => p.setVelocity(origv), 5000)
+        }
 
 
         const speedBoost = (p, u) => {
@@ -142,6 +158,7 @@ class Main extends Phaser.Scene {
         this.physics.add.collider(pl, coins, collideCoin)
         this.physics.add.collider(pl, baddy, endgame)
         this.physics.add.collider(pl, powerups, speedBoost)
+        this.physics.add.collider(pl, tele, teleBoost)
         let scoreText = this.add.text(16, 16, 'Score: 0', {
             fontFamily: "comic sans ms",
             color: "red",
