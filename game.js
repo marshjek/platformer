@@ -156,7 +156,7 @@ class Main extends Phaser.Scene {
         this.physics.add.collider(pl, plats, collidePlat)
         this.physics.add.collider(baddy, plats)
         this.physics.add.collider(pl, coins, collideCoin)
-        this.physics.add.collider(pl, baddy, endgame)
+        //this.physics.add.collider(pl, baddy, endgame)
         this.physics.add.collider(pl, powerups, speedBoost)
         this.physics.add.collider(pl, tele, teleBoost)
         let scoreText = this.add.text(16, 16, 'Score: 0', {
