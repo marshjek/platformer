@@ -111,6 +111,15 @@ class Main extends Phaser.Scene {
         
         setTimeout(spawnPower, 9000)
         
+        const speedBoost = (p, u) => {
+            u.destroy()
+            p.curSpeed += 250
+            setTimeout( () => {p.curSpeed -= 250}, 5000)
+        }
+        
+        
+        
+        
         let jumpBoost = this.physics.add.group()
         const spawnjumpBoost = (x,y) => {
             let j = powerups.create(x||rx(), y||ry(), 'jumpBoost')
@@ -120,6 +129,14 @@ class Main extends Phaser.Scene {
         
         
         setTimeout(spawnjumpBoost, 11000)
+        
+        
+        const jBoost = (p, j) => {
+            j.destroy()
+            p.curJump -= 1000000000000
+            setTimeout( () => {p.curJump -= 75}, 5000)
+        }
+        
             
 
 
@@ -139,19 +156,10 @@ class Main extends Phaser.Scene {
             setTimeout( () => p.setVelocity(origv), 5000)
         }
         
-        const jBoost = (p, j) => {
-            j.destroy()
-            p.curJump -= 1000000000000
-            setTimeout( () => {p.curJump -= 75}, 5000)
-        }
+
         
         
         
-        const speedBoost = (p, u) => {
-            u.destroy()
-            p.curSpeed += 250
-            setTimeout( () => {p.curSpeed -= 250}, 5000)
-        }
             
             
         const collidePlat = () => {
@@ -172,7 +180,7 @@ class Main extends Phaser.Scene {
         //this.physics.add.collider(pl, baddy, endgame)
         this.physics.add.collider(pl, powerups, speedBoost)
         this.physics.add.collider(pl, tele, teleBoost)
-        this.physics.add.collider(pl, jBoost, jumpBoost)
+        this.physics.add.collider(pl, jboost, JBoost)
         let scoreText = this.add.text(16, 16, 'Score: 0', {
             fontFamily: "comic sans ms",
             color: "red",
