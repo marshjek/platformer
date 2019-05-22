@@ -21,6 +21,7 @@ class Main extends Phaser.Scene {
         this.load.image('end', './assets/img/end.png')
         this.load.image('powerup', './assets/img/speed.png')
         this.load.image('tele', '/assets/img/tele.png')
+        this.load.image('bigjump', 'assets/img/jump.png')
 
         this.load.audio('music', './assets/snd/backgoundmusic.mp3')
         this.load.audio('collect', './assets/snd/coinc.wav')
@@ -35,6 +36,8 @@ class Main extends Phaser.Scene {
         pl.setGravityY(1200)
         
         pl.curSpeed = 250
+        pl.curJump = -580
+        
         jump = this.sound.add('jump')
         let music = this.sound.add('music')
         music.play()
@@ -106,7 +109,16 @@ class Main extends Phaser.Scene {
             setTimeout(spawnPower, rr(20000,20000) )
         }
         
-
+        
+        let jboost = this.physics.add.group90
+        const spawnJpower = (x,y) => {
+            let j = powerups.create(x||rx(), y||ry(), 'jboost')
+            j.setscale(2, 2)
+            setTimeout(spawnJpower, rr(25000,25000) )
+        }
+        
+        
+        setTimeout(spawnJboost, 11000)
             
 
         setTimeout(spawnPower, 9000)
@@ -119,11 +131,19 @@ class Main extends Phaser.Scene {
         
         setTimeout(spawnTele, 14000)
         
-        const teleBoost= (p, t) => {
+        const teleBoost = (p, t) => {
             t.destroy()
             let origv = p.body.speed
             p.setVelocity(origv + 9999999999999999999)
             setTimeout( () => p.setVelocity(origv), 5000)
+        }
+        
+        const jBoost = (p, j) => {
+            j.destroy()
+            p.curSpeedj += 100
+            p.curJump += 75
+            setTimeout( () => {p.curSpeedj -= 100}, 2500)
+            setTimeout( () => {p.curJump -= 75}, 3500)
         }
         
         
@@ -132,8 +152,9 @@ class Main extends Phaser.Scene {
             u.destroy()
             p.curSpeed += 250
             setTimeout( () => {p.curSpeed -= 250}, 5000)
-
         }
+            
+            
         const collidePlat = () => {
             if (!bumped) bump.play()
             bumped = true
@@ -174,14 +195,16 @@ class Main extends Phaser.Scene {
         }
         if (keys.LEFT.isDown || keys.A.isDown) {
             pl.setVelocityX(-pl.curSpeed)
+            pl.setVelocityX(-pl.curSpeedj)
         }
         else if (keys.RIGHT.isDown || keys.D.isDown) {
             pl.setVelocityX(pl.curSpeed)
+            pl.setVelocityX(pl.curSpeedj)
 
         }
         if (pl.body.onFloor()) {
             if (keys.UP.isDown || keys.W.isDown) {
-                pl.setVelocityY(-586)
+                pl.setVelocityY(pl.curJump)
                 jump.play()
             }
             pl.setDragX(1700)
