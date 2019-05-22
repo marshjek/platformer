@@ -106,10 +106,8 @@ class Main extends Phaser.Scene {
             setTimeout(spawnPower, rr(20000,20000) )
         }
         
-        const speedBoost = (p, u) => {
-            u.destroy()
-            p.curSpeed += 250
-            setTimeout( () => {p.curSpeed -= 250}, 5000)
+
+            
 
         setTimeout(spawnPower, 9000)
         
@@ -127,12 +125,13 @@ class Main extends Phaser.Scene {
             p.setVelocity(origv + 9999999999999999999)
             setTimeout( () => p.setVelocity(origv), 5000)
         }
-
-
-
-            
-
-
+        
+        
+        
+        const speedBoost = (p, u) => {
+            u.destroy()
+            p.curSpeed += 250
+            setTimeout( () => {p.curSpeed -= 250}, 5000)
 
         }
         const collidePlat = () => {
@@ -182,7 +181,7 @@ class Main extends Phaser.Scene {
         }
         if (pl.body.onFloor()) {
             if (keys.UP.isDown || keys.W.isDown) {
-                pl.setVelocityY(-590)
+                pl.setVelocityY(-586)
                 jump.play()
             }
             pl.setDragX(1700)
