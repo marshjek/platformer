@@ -33,6 +33,7 @@ class Main extends Phaser.Scene {
         pl = this.physics.add.sprite(100, 150, 'player')
         pl.setCollideWorldBounds(true)
         pl.setGravityY(1200)
+        
         pl.curSpeed = 250
         jump = this.sound.add('jump')
         let music = this.sound.add('music')
@@ -104,6 +105,11 @@ class Main extends Phaser.Scene {
             p.setScale(2, 2)
             setTimeout(spawnPower, rr(20000,20000) )
         }
+        
+        const speedBoost = (p, u) => {
+            u.destroy()
+            p.curSpeed += 250
+            setTimeout( () => {p.curSpeed -= 250}, 5000)
 
         setTimeout(spawnPower, 9000)
         
@@ -123,17 +129,11 @@ class Main extends Phaser.Scene {
         }
 
 
-        const speedBoost = (p, u) => {
-            u.destroy()
-            p.curSpeed += 250
-            setTimeout( () => {p.curSpeed -= 250}, 5000)
+
             
 
 
-            // teleport
-            //let origv = p.body.speed
-            //p.setVelocity(origv + 100)
-            //setTimeout( () => p.setVelocity(origv), 5000)
+
         }
         const collidePlat = () => {
             if (!bumped) bump.play()
@@ -182,7 +182,7 @@ class Main extends Phaser.Scene {
         }
         if (pl.body.onFloor()) {
             if (keys.UP.isDown || keys.W.isDown) {
-                pl.setVelocityY(-620)
+                pl.setVelocityY(-590)
                 jump.play()
             }
             pl.setDragX(1700)
