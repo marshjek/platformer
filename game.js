@@ -114,7 +114,7 @@ class Main extends Phaser.Scene {
         let jumpBoost = this.physics.add.group()
         const spawnjumpBoost = (x,y) => {
             let j = powerups.create(x||rx(), y||ry(), 'jumpBoost')
-            j.setscale(2, 2)
+            j.setScale(2, 2)
             setTimeout(spawnJpower, rr(25000,25000) )
         }
         
