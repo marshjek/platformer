@@ -33,7 +33,6 @@ class Main extends Phaser.Scene {
         pl = this.physics.add.sprite(100, 150, 'player')
         pl.setCollideWorldBounds(true)
         pl.setGravityY(1200)
-        //pl.defSpeed = 250
         pl.curSpeed = 250
         jump = this.sound.add('jump')
         let music = this.sound.add('music')
@@ -41,11 +40,6 @@ class Main extends Phaser.Scene {
         let collect = this.sound.add('collect')
         over = this.sound.add('gamesound')
         let bump = this.sound.add('collide')
-        //let width = this.getBounds().width
-        //let badx
-        //if (pl.x < 400) {
-        //  badx = Phaser.Math.Between(0,this.getBounds().width/2)
-        //} else
         
         let baddy = this.physics.add.group()
         const spawnEnemy = () => {
@@ -108,7 +102,7 @@ class Main extends Phaser.Scene {
         const spawnPower = (x,y) => {
             let p = powerups.create(x||rx(), y||ry(), 'powerup')
             p.setScale(2, 2)
-            setTimeout(spawnPower) //, rr(30000,30000) )
+            setTimeout(spawnPower, rr(20000,20000) )
         }
 
         setTimeout(spawnPower, 9000)
@@ -188,7 +182,7 @@ class Main extends Phaser.Scene {
         }
         if (pl.body.onFloor()) {
             if (keys.UP.isDown || keys.W.isDown) {
-                pl.setVelocityY(-570)
+                pl.setVelocityY(-620)
                 jump.play()
             }
             pl.setDragX(1700)
