@@ -36,7 +36,7 @@ class Main extends Phaser.Scene {
         pl.setGravityY(1200)
         
         pl.curSpeed = 250
-        //pl.curJump = -580
+        pl.curJump = -580
         
         jump = this.sound.add('jump')
         let music = this.sound.add('music')
@@ -111,15 +111,15 @@ class Main extends Phaser.Scene {
         
         setTimeout(spawnPower, 9000)
         
-        //let jboost = this.physics.add.group90
-        //const spawnJpower = (x,y) => {
-            //let j = powerups.create(x||rx(), y||ry(), 'jboost')
-            //j.setscale(2, 2)
-            //setTimeout(spawnJpower, rr(25000,25000) )
-        //}
+        let jboost = this.physics.add.group90
+        const spawnJpower = (x,y) => {
+            let j = powerups.create(x||rx(), y||ry(), 'jboost')
+            j.setscale(2, 2)
+            setTimeout(spawnJpower, rr(25000,25000) )
+        }
         
         
-        //setTimeout(spawnJboost, 11000)
+        setTimeout(spawnJboost, 11000)
             
 
 
@@ -139,13 +139,13 @@ class Main extends Phaser.Scene {
             setTimeout( () => p.setVelocity(origv), 5000)
         }
         
-        //const jBoost = (p, j) => {
-            //j.destroy()
-            //p.curSpeedj += 100
-            //p.curJump += 75
-            //setTimeout( () => {p.curSpeedj -= 100}, 2500)
-            //setTimeout( () => {p.curJump -= 75}, 3500)
-        //}
+        const jBoost = (p, j) => {
+            j.destroy()
+            p.curSpeedj += 100
+            p.curJump += 75
+            setTimeout( () => {p.curSpeedj -= 100}, 2500)
+            setTimeout( () => {p.curJump -= 75}, 3500)
+        }
         
         
         
@@ -174,7 +174,7 @@ class Main extends Phaser.Scene {
         //this.physics.add.collider(pl, baddy, endgame)
         this.physics.add.collider(pl, powerups, speedBoost)
         this.physics.add.collider(pl, tele, teleBoost)
-        //this.physics.add.collider(pl,bigjump, jumpBoost)
+        this.physics.add.collider(pl,bigjump, jumpBoost)
         let scoreText = this.add.text(16, 16, 'Score: 0', {
             fontFamily: "comic sans ms",
             color: "red",
@@ -197,16 +197,14 @@ class Main extends Phaser.Scene {
         }
         if (keys.LEFT.isDown || keys.A.isDown) {
             pl.setVelocityX(-pl.curSpeed)
-            pl.setVelocityX(-pl.curSpeedj)
         }
         else if (keys.RIGHT.isDown || keys.D.isDown) {
             pl.setVelocityX(pl.curSpeed)
-            pl.setVelocityX(pl.curSpeedj)
 
         }
         if (pl.body.onFloor()) {
             if (keys.UP.isDown || keys.W.isDown) {
-                //pl.setVelocityY(pl.curJump)
+                pl.setVelocityY(pl.curJump)
                 jump.play()
             }
             pl.setDragX(1700)
