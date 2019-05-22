@@ -108,7 +108,7 @@ class Main extends Phaser.Scene {
         const spawnPower = (x,y) => {
             let p = powerups.create(x||rx(), y||ry(), 'powerup')
             p.setScale(2, 2)
-            setTimeout(spawnPower, rr(10000,10000) )
+            setTimeout(spawnPower) //, rr(30000,30000) )
         }
 
         setTimeout(spawnPower, 9000)
