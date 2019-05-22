@@ -141,8 +141,8 @@ class Main extends Phaser.Scene {
         
         const jBoost = (p, j) => {
             j.destroy()
-            p.curSpeedj += 100
-            p.curJump += 75
+            p.curSpeedj += 75
+            p.curJump -= 120
             setTimeout( () => {p.curSpeedj -= 100}, 2500)
             setTimeout( () => {p.curJump -= 75}, 3500)
         }
