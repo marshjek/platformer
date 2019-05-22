@@ -109,6 +109,7 @@ class Main extends Phaser.Scene {
             setTimeout(spawnPower, rr(20000,20000) )
         }
         
+        setTimeout(spawnPower, 9000)
         
         let jboost = this.physics.add.group90
         const spawnJpower = (x,y) => {
@@ -121,7 +122,7 @@ class Main extends Phaser.Scene {
         setTimeout(spawnJboost, 11000)
             
 
-        setTimeout(spawnPower, 9000)
+
         
         let tele = this.physics.add.group()
         const spawnTele = (x,y) => {
@@ -173,6 +174,7 @@ class Main extends Phaser.Scene {
         //this.physics.add.collider(pl, baddy, endgame)
         this.physics.add.collider(pl, powerups, speedBoost)
         this.physics.add.collider(pl, tele, teleBoost)
+        this.physics.add.collider(pl,bigjump, jumpBoost)
         let scoreText = this.add.text(16, 16, 'Score: 0', {
             fontFamily: "comic sans ms",
             color: "red",
