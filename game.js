@@ -119,7 +119,7 @@ class Main extends Phaser.Scene {
         }
         
         
-        setTimeout(spawnJboost, 11000)
+        setTimeout(spawnJpower, 11000)
             
 
 
