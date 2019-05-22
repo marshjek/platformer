@@ -21,7 +21,7 @@ class Main extends Phaser.Scene {
         this.load.image('end', './assets/img/end.png')
         this.load.image('powerup', './assets/img/speed.png')
         this.load.image('tele', '/assets/img/tele.png')
-        this.load.image('bigjump', 'assets/img/jump.png')
+        this.load.image('jboost', 'assets/img/jump.png')
 
         this.load.audio('music', './assets/snd/backgoundmusic.mp3')
         this.load.audio('collect', './assets/snd/coinc.wav')
