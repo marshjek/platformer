@@ -180,7 +180,7 @@ class Main extends Phaser.Scene {
         //this.physics.add.collider(pl, baddy, endgame)
         this.physics.add.collider(pl, powerups, speedBoost)
         this.physics.add.collider(pl, tele, teleBoost)
-        this.physics.add.collider(pl, jboost, JBoost)
+        //this.physics.add.collider(pl, jboost, JBoost)
         let scoreText = this.add.text(16, 16, 'Score: 0', {
             fontFamily: "comic sans ms",
             color: "red",
