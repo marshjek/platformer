@@ -36,8 +36,7 @@ class Main extends Phaser.Scene {
         pl.setGravityY(1200)
         
         pl.curSpeed = 250
-        pl.curJump = -580
-        
+
         jump = this.sound.add('jump')
         let music = this.sound.add('music')
         music.play()
@@ -119,25 +118,7 @@ class Main extends Phaser.Scene {
         
         
         
-        
-        let jumpBoost = this.physics.add.group()
-        const spawnjumpBoost = (x,y) => {
-            let j = powerups.create(x||rx(), y||ry(), 'jumpBoost')
-            j.setScale(2, 2)
-            setTimeout(spawnjumpBoost, rr(25000,25000) )
-        }
-        
-        
-        setTimeout(spawnjumpBoost, 11000)
-        
-        
-        const jBoost = (p, j) => {
-            j.destroy()
-            //p.curJump -= 1000000000000
-            //setTimeout( () => {p.curJump -= 75}, 5000)
-        }
-        
-            
+
 
 
         
@@ -177,10 +158,9 @@ class Main extends Phaser.Scene {
         this.physics.add.collider(pl, plats, collidePlat)
         this.physics.add.collider(baddy, plats)
         this.physics.add.collider(pl, coins, collideCoin)
-        //this.physics.add.collider(pl, baddy, endgame)
+        this.physics.add.collider(pl, baddy, endgame)
         this.physics.add.collider(pl, powerups, speedBoost)
         this.physics.add.collider(pl, tele, teleBoost)
-        //this.physics.add.collider(pl, jboost, JBoost)
         let scoreText = this.add.text(16, 16, 'Score: 0', {
             fontFamily: "comic sans ms",
             color: "red",
@@ -210,7 +190,7 @@ class Main extends Phaser.Scene {
         }
         if (pl.body.onFloor()) {
             if (keys.UP.isDown || keys.W.isDown) {
-                pl.setVelocityY(pl.curJump)
+                pl.setVelocityY(-575)
                 jump.play()
             }
             pl.setDragX(1700)
