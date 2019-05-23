@@ -21,7 +21,6 @@ class Main extends Phaser.Scene {
         this.load.image('end', './assets/img/end.png')
         this.load.image('powerup', './assets/img/speed.png')
         this.load.image('tele', '/assets/img/tele.png')
-        this.load.image('jboost', 'assets/img/jump.png')
 
         this.load.audio('music', './assets/snd/backgoundmusic.mp3')
         this.load.audio('collect', './assets/snd/coinc.wav')
@@ -34,9 +33,7 @@ class Main extends Phaser.Scene {
         pl = this.physics.add.sprite(100, 150, 'player')
         pl.setCollideWorldBounds(true)
         pl.setGravityY(1200)
-        
         pl.curSpeed = 250
-
         jump = this.sound.add('jump')
         let music = this.sound.add('music')
         music.play()
@@ -107,20 +104,8 @@ class Main extends Phaser.Scene {
             p.setScale(2, 2)
             setTimeout(spawnPower, rr(20000,20000) )
         }
-        
+
         setTimeout(spawnPower, 9000)
-        
-        const speedBoost = (p, u) => {
-            u.destroy()
-            p.curSpeed += 250
-            setTimeout( () => {p.curSpeed -= 250}, 5000)
-        }
-        
-        
-        
-
-
-
         
         let tele = this.physics.add.group()
         const spawnTele = (x,y) => {
@@ -130,19 +115,26 @@ class Main extends Phaser.Scene {
         
         setTimeout(spawnTele, 14000)
         
-        const teleBoost = (p, t) => {
+        const teleBoost= (p, t) => {
             t.destroy()
             let origv = p.body.speed
             p.setVelocity(origv + 9999999999999999999)
             setTimeout( () => p.setVelocity(origv), 5000)
         }
-        
 
-        
-        
-        
+
+        const speedBoost = (p, u) => {
+            u.destroy()
+            p.curSpeed += 250
+            setTimeout( () => {p.curSpeed -= 250}, 5000)
             
-            
+
+
+            // teleport
+            //let origv = p.body.speed
+            //p.setVelocity(origv + 100)
+            //setTimeout( () => p.setVelocity(origv), 5000)
+        }
         const collidePlat = () => {
             if (!bumped) bump.play()
             bumped = true
@@ -158,7 +150,7 @@ class Main extends Phaser.Scene {
         this.physics.add.collider(pl, plats, collidePlat)
         this.physics.add.collider(baddy, plats)
         this.physics.add.collider(pl, coins, collideCoin)
-        this.physics.add.collider(pl, baddy, endgame)
+        //this.physics.add.collider(pl, baddy, endgame)
         this.physics.add.collider(pl, powerups, speedBoost)
         this.physics.add.collider(pl, tele, teleBoost)
         let scoreText = this.add.text(16, 16, 'Score: 0', {
