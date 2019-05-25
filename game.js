@@ -1,6 +1,8 @@
 const KEYS = 'LEFT,RIGHT,UP,DOWN,W,A,S,D,SPACE,R'
 let pl, plats, keys, jump, over, timer, score, hscore
 let bumped = false
+let telec = false
+let speedc = false
 const randint = limit=> Math.floor(Math.random() * limit)
 const randsign = () => Math.random() > 0.5 ? -1 : 1
 const rx = () => randint(game.config.width)
@@ -21,6 +23,8 @@ class Main extends Phaser.Scene {
         this.load.image('end', './assets/img/end.png')
         this.load.image('powerup', './assets/img/speed.png')
         this.load.image('tele', '/assets/img/tele.png')
+        this.load.image('explode', '/assets/img/explode.png')
+
 
         this.load.audio('music', './assets/snd/backgoundmusic.mp3')
         this.load.audio('collect', './assets/snd/coinc.wav')
@@ -100,40 +104,60 @@ class Main extends Phaser.Scene {
         
         let powerups = this.physics.add.group()
         const spawnPower = (x,y) => {
-            let p = powerups.create(x||rx(), y||ry(), 'powerup')
-            p.setScale(2, 2)
-            setTimeout(spawnPower, rr(20000,20000) )
+            if (speedc === false) {
+                let p = powerups.create(x||rx(), y||ry(), 'powerup')
+                p.setScale(2, 2)
+                speedc = true
+            }
+            
         }
-
-        setTimeout(spawnPower, 9000)
+        setInterval(spawnPower, 14000)
         
         let tele = this.physics.add.group()
-        const spawnTele = (x,y) => {
-            let t = tele.create(x||rx(), y||ry(), 'tele')
-            t.setScale(2, 2)
+        const spawnTele = (x,y) => { 
+            if (telec === false) {
+                let t = tele.create(x||rx(), y||ry(), 'tele')
+                t.setScale(2, 2)
+                telec = true
+
+            }
+            
         }
+        setInterval(spawnTele, 10000)
+
+
+        let explode = this.physics.add.group()
+        const spawnExplode = (x,y) => {
+            let e = explode.create(x||rx(), y||ry(), 'explode')
+            e.setScale(2, 2)
+        }
+
+        const explodeAction = (p, e) => {
+            e.destroy()
+            //baddy.children.entries.forEach(bad => bad.destroy())
+            //console.log(baddy)
+            
+        }
+
+        setInterval(spawnExplode, 4000)
         
-        setTimeout(spawnTele, 14000)
-        
-        const teleBoost= (p, t) => {
+        const teleBoost = (p, t) => {
             t.destroy()
+            telec = false
             let origv = p.body.speed
-            p.setVelocity(origv + 9999999999999999999)
+            p.setVelocity(origv + 999999999999999999999999909999999)
             setTimeout( () => p.setVelocity(origv), 5000)
         }
 
 
         const speedBoost = (p, u) => {
             u.destroy()
-            p.curSpeed += 250
-            setTimeout( () => {p.curSpeed -= 250}, 5000)
+            speedc = false
+            p.curSpeed += 175
+            setTimeout( () => {p.curSpeed -= 250}, 6000)
             
 
 
-            // teleport
-            //let origv = p.body.speed
-            //p.setVelocity(origv + 100)
-            //setTimeout( () => p.setVelocity(origv), 5000)
         }
         const collidePlat = () => {
             if (!bumped) bump.play()
@@ -150,9 +174,10 @@ class Main extends Phaser.Scene {
         this.physics.add.collider(pl, plats, collidePlat)
         this.physics.add.collider(baddy, plats)
         this.physics.add.collider(pl, coins, collideCoin)
-        this.physics.add.collider(pl, baddy, endgame)
+        //this.physics.add.collider(pl, baddy, endgame)
         this.physics.add.collider(pl, powerups, speedBoost)
         this.physics.add.collider(pl, tele, teleBoost)
+        this.physics.add.collider(pl, explode, explodeAction)
         let scoreText = this.add.text(16, 16, 'Score: 0', {
             fontFamily: "comic sans ms",
             color: "red",
