@@ -1,4 +1,4 @@
-const KEYS = 'LEFT,RIGHT,UP,DOWN,W,A,S,D,SPACE,R'
+const KEYS = 'LEFT,RIGHT,UP,DOWN,W,A,S,D,SPACE,R,'
 let pl, plats, keys, jump, over, timer, score, hscore
 let bumped = false
 let telec = false
@@ -38,6 +38,7 @@ class Main extends Phaser.Scene {
         pl.setCollideWorldBounds(true)
         pl.setGravityY(1200)
         pl.curSpeed = 250
+
         jump = this.sound.add('jump')
         let music = this.sound.add('music')
         music.play()
@@ -131,15 +132,27 @@ class Main extends Phaser.Scene {
             let e = explode.create(x||rx(), y||ry(), 'explode')
             e.setScale(2, 2)
         }
+        
+        const destroyAll = () => {
+            baddy.children.entries.forEach(bad => bad.destroy())
+            baddy.clear(true)
+        }
+
+        
 
         const explodeAction = (p, e) => {
             e.destroy()
-            //baddy.children.entries.forEach(bad => bad.destroy())
-            //console.log(baddy)
-            
+            destroyAll()
+            setTimeout(destroyAll, 200)
+            setTimeout(destroyAll, 200)
+            setTimeout(destroyAll, 200)
+            setTimeout(destroyAll, 200)
+            setTimeout(destroyAll, 200)
+                        
         }
 
-        setInterval(spawnExplode, 4000)
+        setInterval(spawnExplode, 20000)
+        //setInterval(spawnExplode, 4000)
         
         const teleBoost = (p, t) => {
             t.destroy()
@@ -154,7 +167,7 @@ class Main extends Phaser.Scene {
             u.destroy()
             speedc = false
             p.curSpeed += 175
-            setTimeout( () => {p.curSpeed -= 250}, 6000)
+            setTimeout( () => {p.curSpeed -= 175}, 6000)
             
 
 
@@ -198,6 +211,7 @@ class Main extends Phaser.Scene {
         if (keys.SPACE.isDown) {
             this.scene.restart()
         }
+
         if (keys.LEFT.isDown || keys.A.isDown) {
             pl.setVelocityX(-pl.curSpeed)
         }
