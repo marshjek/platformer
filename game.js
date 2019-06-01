@@ -69,11 +69,13 @@ class Main extends Phaser.Scene {
             
         }
         for (let i=0; i<10; i++) spawnCoin()
+        
         //let em = this.add.particles('coin').createEmitter()
         //em.setPosition(100,200)
         //em.setSpeed(100);
         //em.setBlendMode(Phaser.BlendModes.ADD)
         //em.setGravityY(600)
+        
         keys = this.input.keyboard.addKeys(KEYS) 
         plats = this.physics.add.staticGroup()
         plats.create(300, 525, 'platform').setScale(5, 5).refreshBody()
@@ -152,7 +154,6 @@ class Main extends Phaser.Scene {
         }
 
         setInterval(spawnExplode, 20000)
-        //setInterval(spawnExplode, 4000)
         
         const teleBoost = (p, t) => {
             t.destroy()
@@ -187,7 +188,7 @@ class Main extends Phaser.Scene {
         this.physics.add.collider(pl, plats, collidePlat)
         this.physics.add.collider(baddy, plats)
         this.physics.add.collider(pl, coins, collideCoin)
-        //this.physics.add.collider(pl, baddy, endgame)
+        this.physics.add.collider(pl, baddy, endgame)
         this.physics.add.collider(pl, powerups, speedBoost)
         this.physics.add.collider(pl, tele, teleBoost)
         this.physics.add.collider(pl, explode, explodeAction)
@@ -222,7 +223,7 @@ class Main extends Phaser.Scene {
         if (pl.body.onFloor()) {
             if (keys.UP.isDown || keys.W.isDown) {
                 pl.setVelocityY(-575)
-                jump.play()
+                //jump.play()
             }
             pl.setDragX(1700)
         }
