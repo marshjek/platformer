@@ -223,7 +223,7 @@ class Main extends Phaser.Scene {
         if (pl.body.onFloor()) {
             if (keys.UP.isDown || keys.W.isDown) {
                 pl.setVelocityY(-575)
-                //jump.play()
+                jump.play()
             }
             pl.setDragX(1700)
         }
