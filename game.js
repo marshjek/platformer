@@ -1,8 +1,11 @@
 const KEYS = 'LEFT,RIGHT,UP,DOWN,W,A,S,D,SPACE,R,'
 let pl, plats, keys, jump, over, timer, score, hscore
 let bumped = false
+
 let telec = false
 let speedc = false
+let explodec = false 
+
 const randint = limit=> Math.floor(Math.random() * limit)
 const randsign = () => Math.random() > 0.5 ? -1 : 1
 const rx = () => randint(game.config.width)
@@ -95,7 +98,7 @@ class Main extends Phaser.Scene {
         const collideCoin = (p, c) => {
             c.destroy()
             spawnCoin()
-            score += 1 //same as score = score + 1
+            score += 1 
             scoreText.setText(`Score: ${score}`)
             collect.play()
             if (score >= hscore) {
@@ -131,8 +134,10 @@ class Main extends Phaser.Scene {
 
         let explode = this.physics.add.group()
         const spawnExplode = (x,y) => {
-            let e = explode.create(x||rx(), y||ry(), 'explode')
-            e.setScale(2, 2)
+            if (explodec === false) {
+                let e = explode.create(x||rx(), y||ry(), 'explode')
+                e.setScale(2, 2)
+            }
         }
         
         const destroyAll = () => {
@@ -144,6 +149,7 @@ class Main extends Phaser.Scene {
 
         const explodeAction = (p, e) => {
             e.destroy()
+            explodec = false
             destroyAll()
             setTimeout(destroyAll, 200)
             setTimeout(destroyAll, 200)
@@ -186,6 +192,7 @@ class Main extends Phaser.Scene {
             over.play()
             telec = false
             speedc = false
+            explodec = false
 
         }
         this.physics.add.collider(pl, plats, collidePlat)
