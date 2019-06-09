@@ -175,7 +175,7 @@ class Main extends Phaser.Scene {
         }
         const collidePlat = () => {
             if (!bumped) bump.play()
-            bumped = true
+            bumped = false
         }
         const endgame = (p, b) => {
             b.destroy()
