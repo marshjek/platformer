@@ -184,8 +184,8 @@ class Main extends Phaser.Scene {
             this.physics.pause()
             music.stop()
             over.play()
-            let telec = false
-            let speedc = false
+            telec = false
+            speedc = false
 
         }
         this.physics.add.collider(pl, plats, collidePlat)
