@@ -117,7 +117,7 @@ class Main extends Phaser.Scene {
             }
             
         }
-        setInterval(spawnPower, 14000)
+        setInterval(spawnPower, 16000)
         
         let tele = this.physics.add.group()
         const spawnTele = (x,y) => { 
@@ -160,7 +160,7 @@ class Main extends Phaser.Scene {
                         
         }
 
-        setInterval(spawnExplode, 20000)
+        setInterval(spawnExplode, 23000)
         
         const teleBoost = (p, t) => {
             t.destroy()
