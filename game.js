@@ -137,6 +137,7 @@ class Main extends Phaser.Scene {
             if (explodec === false) {
                 let e = explode.create(x||rx(), y||ry(), 'explode')
                 e.setScale(2, 2)
+                explodec = true
             }
         }
         
