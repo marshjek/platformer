@@ -5,6 +5,7 @@ let bumped = false
 let telec = false
 let speedc = false
 let explodec = false 
+let jboostc = false
 
 const randint = limit=> Math.floor(Math.random() * limit)
 const randsign = () => Math.random() > 0.5 ? -1 : 1
@@ -27,6 +28,7 @@ class Main extends Phaser.Scene {
         this.load.image('powerup', './assets/img/speed.png')
         this.load.image('tele', '/assets/img/tele.png')
         this.load.image('explode', '/assets/img/explode.png')
+        this.load.image('jboost', '/assets/img/jumpboost.png')
 
 
         this.load.audio('music', './assets/snd/backgoundmusic.mp3')
@@ -41,6 +43,7 @@ class Main extends Phaser.Scene {
         pl.setCollideWorldBounds(true)
         pl.setGravityY(1200)
         pl.curSpeed = 250
+        pl.curJump = -575
 
         jump = this.sound.add('jump')
         let music = this.sound.add('music')
@@ -110,14 +113,14 @@ class Main extends Phaser.Scene {
         
         let powerups = this.physics.add.group()
         const spawnPower = (x,y) => {
-            if (speedc === false) {
+            if (speedc === false && jboostc === false) {
                 let p = powerups.create(x||rx(), y||ry(), 'powerup')
                 p.setScale(2, 2)
                 speedc = true
             }
             
         }
-        setInterval(spawnPower, 16000)
+        setInterval(spawnPower, 18000)
         
         let tele = this.physics.add.group()
         const spawnTele = (x,y) => { 
@@ -129,7 +132,17 @@ class Main extends Phaser.Scene {
             }
             
         }
-        setInterval(spawnTele, 10000)
+        setInterval(spawnTele, 9000)
+
+        let jboost = this.physics.add.group()
+        const jboostspawn = (x,y) => {
+            if (jboostc === false && speedc === false) {
+                let j = jboost.create(x||rx(), y||ry(), 'jboost')
+                j.setScale(1.5, 1.5)
+                jboostc = true
+            }
+            
+        }
 
 
         let explode = this.physics.add.group()
@@ -160,13 +173,13 @@ class Main extends Phaser.Scene {
                         
         }
 
-        setInterval(spawnExplode, 23000)
+        setInterval(spawnExplode, 25000)
         
         const teleBoost = (p, t) => {
             t.destroy()
             telec = false
             let origv = p.body.speed
-            p.setVelocity(origv + 999999999999999999999999909999999)
+            p.setVelocity(origv - 999999999999999999999999909999999)
             setTimeout( () => p.setVelocity(origv), 5000)
         }
 
@@ -180,6 +193,19 @@ class Main extends Phaser.Scene {
 
 
         }
+
+        
+
+        setInterval(jboostspawn, 15000)
+
+        const jboostaction = (p, j) => {
+            j.destroy()
+            jboostc = false
+            p.curJump -= 200
+            setTimeout( () => {p.curJump += 200}, 5000)
+        }
+
+
         const collidePlat = () => {
             //if (!bumped) bump.play()
             bumped = true
@@ -191,10 +217,11 @@ class Main extends Phaser.Scene {
             this.physics.pause()
             music.stop()
             over.play()
+
             telec = false
             speedc = false
             explodec = false
-
+            jboostc = false
         }
         this.physics.add.collider(pl, plats, collidePlat)
         this.physics.add.collider(baddy, plats)
@@ -203,6 +230,7 @@ class Main extends Phaser.Scene {
         this.physics.add.collider(pl, powerups, speedBoost)
         this.physics.add.collider(pl, tele, teleBoost)
         this.physics.add.collider(pl, explode, explodeAction)
+        this.physics.add.collider(pl, jboost, jboostaction)
         let scoreText = this.add.text(16, 16, 'Score: 0', {
             fontFamily: "comic sans ms",
             color: "red",
@@ -233,7 +261,7 @@ class Main extends Phaser.Scene {
         }
         if (pl.body.onFloor()) {
             if (keys.UP.isDown || keys.W.isDown) {
-                pl.setVelocityY(-575)
+                pl.setVelocityY(pl.curJump)
                 jump.play()
             }
             pl.setDragX(1700)
