@@ -6,6 +6,7 @@ let telec = false
 let speedc = false
 let explodec = false 
 let jboostc = false
+let sane = false
 
 const randint = limit=> Math.floor(Math.random() * limit)
 const randsign = () => Math.random() > 0.5 ? -1 : 1
@@ -29,6 +30,7 @@ class Main extends Phaser.Scene {
         this.load.image('tele', '/assets/img/tele.png')
         this.load.image('explode', '/assets/img/explode.png')
         this.load.image('jboost', '/assets/img/jumpboost.png')
+        this.load.image('sane', '/assets/img/supersane.png')
 
 
         this.load.audio('music', './assets/snd/backgoundmusic.mp3')
@@ -64,6 +66,21 @@ class Main extends Phaser.Scene {
         }
         spawnEnemy()
 
+        let sane = this.physics.add.group()
+        const spawnSuper = () => {
+            
+            let s = sane.create(rx(), ry(), 'sane')
+            s.setCollideWorldBounds(true)
+            s.setGravityY(100)
+            s.setBounce(1.1)
+            let velx = 300 * randsign() + randint(50)
+            let vely = 300 * randsign() + randint(50) 
+            s.setVelocity(200)
+            s.setScale(2.5, 2.5)
+            
+        }
+        
+        timer = setInterval(spawnSuper, 30000)
 
 
         timer = setInterval(spawnEnemy, 2000)
@@ -157,6 +174,8 @@ class Main extends Phaser.Scene {
         const destroyAll = () => {
             baddy.children.entries.forEach(bad => bad.destroy())
             baddy.clear(true)
+            sane.children.entries.forEach(sane => sane.destroy())
+            sane.clear(true)
         }
 
         
@@ -231,6 +250,8 @@ class Main extends Phaser.Scene {
         this.physics.add.collider(pl, tele, teleBoost)
         this.physics.add.collider(pl, explode, explodeAction)
         this.physics.add.collider(pl, jboost, jboostaction)
+        this.physics.add.collider(sane, plats)
+        this.physics.add.collider(pl, sane, endgame)
         let scoreText = this.add.text(16, 16, 'Score: 0', {
             fontFamily: "comic sans ms",
             color: "red",
