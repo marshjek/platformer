@@ -266,10 +266,6 @@ class Main extends Phaser.Scene {
         })
     }
     update() {
-        if (score === 10) {
-            baddy.children.entries.forEach(bad => bad.destroy())
-            baddy.clear(true)
-        }
         if (bumped && pl.body.touching.none) {
             bumped = false
         }
