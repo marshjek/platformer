@@ -270,8 +270,8 @@ class Main extends Phaser.Scene {
             bumped = false
         }
         if (keys.SPACE.isDown) {
-            this.scene.restart()
             music.stop()
+            this.scene.restart()
         }
 
         if (keys.LEFT.isDown || keys.A.isDown) {
