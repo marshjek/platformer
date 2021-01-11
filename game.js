@@ -271,6 +271,7 @@ class Main extends Phaser.Scene {
         }
         if (keys.SPACE.isDown) {
             this.scene.restart()
+            music.stop()
         }
 
         if (keys.LEFT.isDown || keys.A.isDown) {
